@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: tutor
+  name: tutor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tutor
+  template:
+    metadata:
+      labels:
+        app: tutor
+    spec:
+      initContainers:
+        - name: git-cloner
+          image: alpine/git:v2.32.0
+          args:
+            - clone
+            - https://github.com/stroebitzer/tutor-training.git
+            - /training
+          # TODO liveness readiness & resources
+          volumeMounts:
+            - name: training
+              mountPath: /training            
+      containers:
+        - name: backend
+          image: ueber/tutor-backend:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - name: backend
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          env:
+           - name: TRAINING_FILE
+             value: "/training/training.yaml"
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 8080
+          volumeMounts:
+            - name: training
+              mountPath: /training
+        - name: ide
+          image: ueber/tutor-ide:0.0.1
+          imagePullPolicy: Always
+          ports:
+            - name: ide
+              containerPort: 3000
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+              # TODO
+          # livenessProbe:
+          #   httpGet:
+          #     path: /liveness
+          #     port: 8080
+          # readinessProbe:
+          #   httpGet:
+          #     path: /readiness
+          #     port: 8080          
+          volumeMounts:
+            - name: training
+              mountPath: /home/project
+      volumes:
+        - name: training
+          emptyDir: {}
+          
