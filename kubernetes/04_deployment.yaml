@@ -40,7 +40,7 @@ spec:
               memory: 256Mi
           env:
             - name: TRAINING_FILE
-              value: "/training/training.yaml"
+              value: "/training/.training.yaml"
           livenessProbe:
             httpGet:
               path: /liveness
@@ -79,5 +79,8 @@ spec:
               mountPath: /home/project
       volumes:
         - name: training
-          persistentVolumeClaim:
-            claimName: tutor
+        # TODO
+          # persistentVolumeClaim:
+          #   claimName: tutor
+          emptyDir: {}
+            
