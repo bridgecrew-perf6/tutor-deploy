@@ -10,6 +10,7 @@ spec:
   selector:
     app: tutor
   ports:
+  # TODO in prod backend and ide do not need to get exposed due to everyting is running on localhost
     - name: backend
       port: 8080
       targetPort: backend
@@ -18,6 +19,10 @@ spec:
       port: 8081
       targetPort: ide
       nodePort: 30101
+    - name: frontend
+      port: 80
+      targetPort: frontend
+      nodePort: 30102
 
 
 
