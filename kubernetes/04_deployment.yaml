@@ -39,8 +39,10 @@ spec:
               cpu: 200m
               memory: 256Mi
           env:
+            - name: TRAINING_DIR
+              value: "/training"
             - name: TRAINING_FILE
-              value: "/training/.training.yaml"
+              value: ".training.yaml"
           livenessProbe:
             httpGet:
               path: /liveness
