@@ -54,6 +54,8 @@ spec:
           volumeMounts:
             - name: training
               mountPath: /training
+            - name: kubeconfig
+              mountPath: /root/.kube
         - name: ide
           image: ueber/tutor-ide:0.0.1
           imagePullPolicy: Always
@@ -107,4 +109,7 @@ spec:
           # persistentVolumeClaim:
           #   claimName: tutor
           emptyDir: {}
+        - name: kubeconfig
+          secret:
+            secretName: kubeconfig
             
