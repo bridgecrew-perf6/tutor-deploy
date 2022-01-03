@@ -81,6 +81,8 @@ spec:
           volumeMounts:
             - name: training
               mountPath: /home/project
+            - name: kubeconfig
+              mountPath: /root/.kube
         - name: frontend
           image: ueber/tutor-frontend:0.0.1
           imagePullPolicy: Always
