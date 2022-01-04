@@ -95,6 +95,11 @@ spec:
           ports:
             - name: frontend
               containerPort: 80
+          env:
+            - name: API_URL
+              value: "http://10.0.0.143:30100"
+            - name: IDE_URL
+              value: "http://10.0.0.143:30101"              
           resources:
             requests:
               cpu: 100m
