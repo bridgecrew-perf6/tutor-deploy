@@ -1,2 +1,2 @@
-kubernetes/06_kubeconfig.yaml
-kubernetes/config
+/kubernetes/config
+/kubernetes/values.yaml

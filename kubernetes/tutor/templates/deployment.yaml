@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: tutor
   name: tutor
 spec:
   replicas: 1
@@ -18,7 +17,7 @@ spec:
           image: alpine/git:v2.32.0
           args:
             - clone
-            - https://github.com/stroebitzer/tutor-training.git
+            - {{ .Values.gitRepo }}
             - /training
           resources:
             requests:
@@ -48,7 +47,7 @@ spec:
             - name: TRAINING_DIR
               value: "/training"
             - name: TRAINING_FILE
-              value: ".training.yaml"
+              value: "{{ .Values.trainingFile }}"
           livenessProbe:
             httpGet:
               path: /liveness
@@ -97,9 +96,9 @@ spec:
               containerPort: 80
           env:
             - name: API_URL
-              value: "http://10.0.0.143:30100"
+              value: "{{ .Values.protocol }}://{{ .Values.host }}:{{ .Values.backend.nodePort }}"
             - name: IDE_URL
-              value: "http://10.0.0.143:30101"              
+              value: "{{ .Values.protocol }}://{{ .Values.host }}:{{ .Values.ide.nodePort }}"
           resources:
             requests:
               cpu: 100m

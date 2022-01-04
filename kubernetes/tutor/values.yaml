@@ -1,0 +1,14 @@
+gitRepo: https://github.com/stroebitzer/tutor-training.git
+trainingFile: .training.yaml
+protocol: http
+host: 10.0.0.143
+kubeConfig: <INSERT kubeconfig>
+
+backend:
+  nodePort: 30100
+
+ide:
+  nodePort: 30101
+
+frontend:
+  nodePort: 30102
