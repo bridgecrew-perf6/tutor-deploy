@@ -10,7 +10,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: local
   local:
-    path: /home/hubert/kubernetes/tutor
+    path: /root/kubernetes/tutor
   nodeAffinity:
     required:
       nodeSelectorTerms:
